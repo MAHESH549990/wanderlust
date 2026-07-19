@@ -9,7 +9,8 @@ const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
 const ejsMate=require("ejs-mate");
 const wrapAsync=require("./utility/wrapasync.js");
 const ExpressError = require("./utility/ExpressError.js");
-const {listingSchem}=require("./schema.js");
+const {listingSchem,reviewSchema}=require("./schema.js");
+const Review=require("./models/review.js");
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -47,6 +48,18 @@ const validation=((req,res,next)=>{
     }
 });
 
+const reviewvalidation=((req,res,next)=>{
+    let {error}=reviewSchema.validate(req.body);
+    if(error){
+      let errMsg=error.details.map((el)=>el.message).join(",");
+      throw new ExpressError(400,errMsg);
+    }
+    else{
+      next();
+    }
+});
+
+
 app.get("/",(req,res)=>{
   res.send("You're in website home page");
 });
@@ -67,7 +80,7 @@ app.get("/listings/new", (req,res)=>{
 //show  route
 app.get("/listings/:id", wrapAsync(async (req, res) => {
   const { id } = req.params;
-  const listing = await Listing.findById(id);
+  const listing = await Listing.findById(id).populate("reviews");
 
   res.render("listings/show", { listing });
 }));
@@ -103,13 +116,40 @@ app.delete("/listings/:id",wrapAsync(async(req,res)=>{
   res.redirect("/listings");
 }));
 
+//Review Route for listing
+app.post("/listings/:id/reviews",reviewvalidation,wrapAsync(async(req,res)=>{
+   let listing=await Listing.findById(req.params.id);
+   let newRew=new Review(req.body.review);
+
+   listing.reviews.push(newRew);
+
+   await newRew.save();
+   await listing.save();
+    
+   res.redirect(`/listings/${listing._id}`);
+}));
+
+// Delete Reviews
+app.delete("/listings/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
+  let {id,reviewId}=req.params;
+  await Listing.findByIdAndUpdate(id, {$pull: {reviews:reviewId}});
+  await Review.findByIdAndDelete(reviewId);
+  res.redirect(`/listings/${id}`);
+}));
+
+
+
+
 //If user go to any anoter route that is not exist
 app.all("/*splat",(req,res,next)=>{
   next(new ExpressError(404,"Page not found"));
 });
+
+
 
 //middleware
 app.use((err,req,res,next)=>{
   let { statusCode = 500, message = "Something went wrong!" } = err;
   res.status(statusCode).render("listings/error", { message });
 });
+
