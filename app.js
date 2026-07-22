@@ -2,23 +2,59 @@ const express=require("express");
 const app=express();
 const port=8080;
 const path=require("path");
-const methodOverride=require("method-override")
+const methodOverride=require("method-override");
 const mongoose=require("mongoose");
 const Listing=require("./models/listing.js");
 const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
 const ejsMate=require("ejs-mate");
-const wrapAsync=require("./utility/wrapasync.js");
 const ExpressError = require("./utility/ExpressError.js");
-const {listingSchem,reviewSchema}=require("./schema.js");
 const Review=require("./models/review.js");
+const session=require("express-session");
+const flash=require("connect-flash");
+const passport=require("passport");
+const LocalStrategy=require("passport-local");
+const User=require("./models/user.js");
 
-app.set("view engine","ejs");
-app.set("views",path.join(__dirname,"views"));
+const sessionOption={
+  secret:"mysupersecretstring",
+  resave:false,
+  saveUninitialized:true,
+  cookie:{
+    expires:Date.now()+7*24*60*60*1000, //for 7 days 
+    maxAge:7*24*60*60*1000,
+    httpOnly:true,//security purpose
+  },
+};
+
+app.use(session(sessionOption));
+app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+//used flash
+app.use((req,res,next)=>{
+  res.locals.success=req.flash("success");
+  res.locals.error=req.flash("error");
+  next();
+});
+
+//Define the routes
+const listingsRoute=require("./routes/listings.js");
+const reviewsRoute=require("./routes/review.js");
+const userRoute=require("./routes/user.js");
+
 
 app.use(express.static(path.join(__dirname,"public")));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 app.use(express.json());
+
+app.set("view engine","ejs");
+app.set("views",path.join(__dirname,"views"));
 
 app.engine("ejs", ejsMate);
 
@@ -31,121 +67,25 @@ main().then(()=>{
 async function main(){
   await mongoose.connect(MONGO_URL);
 }
+
 app.listen(port,()=>{
   console.log("Server is running");
 });
-
-//joi function for validation
-
-const validation=((req,res,next)=>{
-    let {error}=listingSchem.validate(req.body);
-    if(error){
-      let errMsg=error.details.map((el)=>el.message).join(",");
-      throw new ExpressError(400,errMsg);
-    }
-    else{
-      next();
-    }
-});
-
-const reviewvalidation=((req,res,next)=>{
-    let {error}=reviewSchema.validate(req.body);
-    if(error){
-      let errMsg=error.details.map((el)=>el.message).join(",");
-      throw new ExpressError(400,errMsg);
-    }
-    else{
-      next();
-    }
-});
-
 
 app.get("/",(req,res)=>{
   res.send("You're in website home page");
 });
 
 
-
-//index route
-app.get("/listings",wrapAsync(async(req,res,next)=>{
-    const alllisting=await Listing.find({});
-   res.render("listings/index",{alllisting});
-}));
-
-//create listing
-app.get("/listings/new", (req,res)=>{
- res.render("listings/new");
-});
-
-//show  route
-app.get("/listings/:id", wrapAsync(async (req, res) => {
-  const { id } = req.params;
-  const listing = await Listing.findById(id).populate("reviews");
-
-  res.render("listings/show", { listing });
-}));
-
-app.post("/listings",
-    validation,
-    wrapAsync(async (req, res) => {   
-    const newListing = new Listing(req.body.listing);
-    await newListing.save();
-}));
-
-// Edit route
-
-app.get("/listings/:id/edit",wrapAsync(async(req,res)=>{
-  const {id}=req.params;
-  const listing= await Listing.findById(id);
-  res.render("listings/edit",{listing});
-}));
-
-//Update route
-
-app.put("/listings/:id",validation, wrapAsync(async (req, res) => {
-  
-  let { id } = req.params;
-  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-  res.redirect(`/listings/${id}`); 
-}));
-
-//Delete route
-app.delete("/listings/:id",wrapAsync(async(req,res)=>{
-  let {id}=req.params;
-  await Listing.findByIdAndDelete(id,{new:true});
-  res.redirect("/listings");
-}));
-
-//Review Route for listing
-app.post("/listings/:id/reviews",reviewvalidation,wrapAsync(async(req,res)=>{
-   let listing=await Listing.findById(req.params.id);
-   let newRew=new Review(req.body.review);
-
-   listing.reviews.push(newRew);
-
-   await newRew.save();
-   await listing.save();
-    
-   res.redirect(`/listings/${listing._id}`);
-}));
-
-// Delete Reviews
-app.delete("/listings/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
-  let {id,reviewId}=req.params;
-  await Listing.findByIdAndUpdate(id, {$pull: {reviews:reviewId}});
-  await Review.findByIdAndDelete(reviewId);
-  res.redirect(`/listings/${id}`);
-}));
-
-
-
+//Listing route
+app.use("/listings",listingsRoute);
+app.use("/listings/:id/reviews",reviewsRoute);
+app.use("/",userRoute);
 
 //If user go to any anoter route that is not exist
 app.all("/*splat",(req,res,next)=>{
   next(new ExpressError(404,"Page not found"));
 });
-
-
 
 //middleware
 app.use((err,req,res,next)=>{
