@@ -90,10 +90,13 @@ async function main(){
   await mongoose.connect(DB_URL);
 }
 
+app.get("/", (req,res)=>{
+    res.redirect("/listings");
+});
+
 // app.get("/",(req,res)=>{
 //   res.send("You're in website home page");
 // });
-
 
 //Listing route
 app.use("/",userRoute);
