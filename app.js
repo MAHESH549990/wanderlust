@@ -6,7 +6,7 @@ dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 const express=require("express");
 const app=express();
-const port=8080;
+const port = process.env.PORT || 8080;
 const path=require("path");
 const methodOverride=require("method-override");
 const mongoose=require("mongoose");
@@ -22,14 +22,10 @@ const LocalStrategy=require("passport-local");
 const User=require("./models/user.js");
 const DB_URL=process.env.MONGODB_URL;
 
-console.log("SESSION SECRET:", process.env.SESSION_SECRET);
 
 // for store the cookies in mongoDB Atlas
 const store = MongoStore.create({
   mongoUrl: DB_URL,
-  crypto: {
-    secret: process.env.SESSION_SECRET,
-  },
   touchAfter: 24 * 3600,
 });
 
@@ -44,7 +40,6 @@ const sessionOption = {
     httpOnly: true,
   },
 };
-console.log(DB_URL);
 
 app.use(session(sessionOption));
 app.use(flash());
