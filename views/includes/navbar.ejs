@@ -1,21 +1,77 @@
-<nav class="navbar navbar-expand-md bg-body-light sticky-top">
+
+<nav class="navbar navbar-expand-md bg-white sticky-top shadow-sm">
+  <style>
+  .btn{
+    background-color: #fe424d;
+    border-radius:1.5rem;
+    padding:0 1rem 0 1rem;
+  }
+  .btn:hover{
+    background-color: #fe424d;
+    border-radius:1.5rem;
+  }
+  </style>
   <div class="container-fluid">
-    <a class="navbar-brand" href="/"><i class="fa-solid fa-compass"></i></a>
 
-    <button class="navbar-toggler" type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup">
+    <!-- Left: Logo -->
+    <a class="navbar-brand" href="/listings">
+      <i class="fa-solid fa-compass text-danger"></i>
+    </a>
 
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <!-- Right: Search + Toggle -->
+    <div class="d-flex align-items-center ms-auto">
 
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" href="/">Home</a>
-        <a class="nav-link" href="/listings">All Listing</a>
-        <a class="nav-link" href="/listings/new">Add new Listing</a>
-      </div>
+      <!-- Search -->
+      <form class="d-flex me-2" role="search">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search">
+        <button class="btn" type="submit">
+          Search
+        </button>
+      </form>
+
+      <!-- Toggle -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
     </div>
+
+    <!-- Collapsible Menu -->
+    <div class="collapse navbar-collapse mt-2 mt-md-0" id="navbarNavAltMarkup">
+
+      <div class="navbar-nav">
+        <a class="nav-link" href="/listings"><i class="fa-brands fa-slack"></i>Explore</a>
+
+      <div class="navbar-nav d-flex justify-content-end">
+      <a class="nav-link" href="/listings/new"><i class="fa-solid fa-plus"></i> Switch to hosting</a>
+      </div>
+       <% if(typeof currUser === "undefined" || !currUser){ %>
+  <a class="nav-link" href="/login"><b>Login</b></a>
+  <a class="nav-link" href="/signup"><b>Sign Up</b></a>
+<% } else { %>
+  <a class="nav-link" href="/logout">
+    <i class="fa-solid fa-right-to-bracket"></i>
+    <b>Logout</b>
+  </a>
+
+  <a class="nav-link" href="/profile">
+    <b><i class="fa-solid fa-address-book"></i> Profile</b>
+  </a>
+<% } %>
+      </div>
+
+    </div>
+
   </div>
 </nav>
