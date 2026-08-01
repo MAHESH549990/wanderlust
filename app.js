@@ -77,6 +77,8 @@ app.use((req, res, next) => {
 });
 
 
+
+
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 
@@ -91,6 +93,10 @@ main().then(()=>{
 async function main(){
   await mongoose.connect(DB_URL);
 }
+
+console.log("Cloud Name:", process.env.CLOUD_NAME);
+console.log("API Secret exists:", !!process.env.CLOUD_API_SECRET);
+
 
 app.get("/", (req,res)=>{
     res.redirect("/listings");
