@@ -2,6 +2,11 @@ const mongoose=require("mongoose");
 const {Schema}=mongoose;
 
 const reviewSchema=Schema({
+  listing:{
+    type:Schema.Types.ObjectId,
+    ref:"Listing",
+    required:true,
+  },
   comment:String,
   rating:{
     type:Number,

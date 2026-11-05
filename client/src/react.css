@@ -1,0 +1,79 @@
+#root, .app-shell { min-height: 100vh; }
+.app-shell { display: flex; flex-direction: column; }
+.app-main { flex: 1; width: min(100% - 2rem, 1280px); margin: 0 auto; padding: 1.25rem 0 3rem; }
+.app-notice { position: fixed; z-index: 1100; top: 5.8rem; left: 50%; max-width: min(92vw, 38rem); padding: .85rem 1.15rem; transform: translateX(-50%); border: 1px solid var(--line); border-radius: .8rem; background: white; box-shadow: 0 8px 25px rgba(23,33,29,.1); font-size: .9rem; }
+.app-notice.error, .inline-error { color: #a92f35; background: #fff1f0; }
+.app-notice.success { color: #226242; background: #f0fbf4; }
+.inline-error { margin: 1rem 0; padding: .8rem 1rem; border: 1px solid #f0cdca; border-radius: .75rem; }
+.nav-button { border: 0; background: transparent; font: inherit; cursor: pointer; }
+.react-filters { display: flex; align-items: center; gap: .35rem; overflow-x: auto; padding: .8rem 0 1.1rem; border-bottom: 1px solid var(--line); scrollbar-width: thin; }
+.react-filters .tax-toggle { margin-left: auto; }
+.save-listing { position: absolute; top: .7rem; right: .7rem; display: grid; width: 2.2rem; height: 2.2rem; place-items: center; border: 0; border-radius: 50%; color: #38443d; background: rgba(255,255,255,.94); }
+.save-listing.saved { color: var(--brand); }
+.listing-rating { flex: 0 0 auto; color: #49574f; font-size: .75rem; }
+.listing-rating i, .review-head i { color: #d49a2a; }
+.detail-page { padding-top: .5rem; }
+.detail-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+.detail-heading h1 { margin-bottom: .2rem; font-size: clamp(1.65rem, 4vw, 2.4rem); }
+.detail-actions { display: flex; gap: .5rem; }
+.btn-delete { color: #a92f35; border: 1px solid #f0cdca; background: #fff6f5; }
+.detail-hero { display: block; width: 100%; max-height: 36rem; aspect-ratio: 16 / 8; object-fit: cover; border-radius: 1.1rem; }
+.detail-columns { display: grid; grid-template-columns: minmax(0, 1fr) 19rem; gap: 3rem; margin-top: 2rem; }
+.detail-host { display: flex; align-items: center; gap: .8rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--line); }
+.host-avatar { display: grid; width: 2.8rem; height: 2.8rem; place-items: center; border-radius: 50%; color: white; background: var(--brand); font-weight: 800; }
+.detail-host div { display: grid; gap: .1rem; }
+.detail-host strong { font-size: .95rem; }
+.detail-host div span, .booking-card > p > span { color: var(--muted); font-size: .8rem; }
+.detail-description { margin: 1.3rem 0; color: #445149; line-height: 1.85; white-space: pre-line; }
+.detail-facts { display: flex; flex-wrap: wrap; gap: .7rem; padding: 1rem 0 1.5rem; border-bottom: 1px solid var(--line); }
+.detail-facts span { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .65rem; border-radius: .6rem; color: #4e5a53; background: white; font-size: .78rem; }
+.detail-facts i { color: var(--brand-dark); }
+.section-title { margin: 1.6rem 0 1rem; font-size: 1.2rem; }
+.section-title span { color: var(--muted); font-size: .9rem; font-weight: 500; }
+.booking-card { align-self: start; padding: 1.2rem; border: 1px solid var(--line); border-radius: 1rem; background: white; box-shadow: 0 8px 26px rgba(23,33,29,.06); }
+.booking-card > p:first-child { margin: 0; }
+.booking-card > p:first-child strong { font-size: 1.2rem; }
+.booking-location { margin: .4rem 0 1rem; color: var(--muted); font-size: .82rem; }
+.review-form { padding: 1rem; border: 1px solid var(--line); border-radius: .9rem; background: white; }
+.review-form .form-select { max-width: 12rem; }
+.review-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; margin-top: 1rem; }
+.review-card { padding: 1rem; border: 1px solid var(--line); border-radius: .9rem; background: white; }
+.review-head { display: flex; align-items: center; justify-content: space-between; gap: .5rem; font-size: .83rem; }
+.review-head span { color: var(--muted); font-size: .75rem; }
+.review-card p { margin: .7rem 0 .2rem; color: #48564e; font-size: .88rem; white-space: pre-line; }
+.text-button { padding: 0; border: 0; color: var(--brand-dark); background: transparent; font-size: .78rem; }
+.map-section { margin-top: 2.3rem; }
+.mapbox-container { min-height: 20rem; overflow: hidden; border: 1px solid var(--line); border-radius: 1rem; background: #edf1ed; }
+.mapbox-container > p { padding: 1rem; color: var(--muted); }
+.form-page { width: min(100%, 54rem); margin: 0 auto; }
+.form-page-heading { width: 100%; }
+.listing-form { display: grid; margin: 1.3rem auto; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-preview { width: min(100%, 24rem); margin-top: 1rem; border-radius: .8rem; object-fit: cover; }
+.loading-state { display: flex; align-items: center; justify-content: center; gap: .65rem; min-height: 14rem; color: var(--muted); }
+.empty-page { display: grid; min-height: 55vh; align-content: center; justify-items: start; gap: .6rem; }
+.empty-page h1 { margin: 0 0 .5rem; }
+.app-footer { border-top: 1px solid var(--line); background: white; }
+.footer-inner { display: flex; width: min(100% - 2rem, 1280px); min-height: 4.5rem; align-items: center; justify-content: space-between; gap: 1rem; margin: 0 auto; color: var(--muted); font-size: .78rem; }
+
+@media (max-width: 991px) {
+  .navbar-collapse { display: none; flex-basis: 100%; }
+  .navbar-collapse.show { display: block; }
+  .navbar-nav { align-items: stretch; }
+  .nav-search { width: 100%; margin: .75rem 0 .45rem; }
+  .react-filters { margin-inline: -.25rem; }
+}
+@media (max-width: 767px) {
+  .app-main { width: min(100% - 1.25rem, 1280px); padding-top: .8rem; }
+  .listing-heading { align-items: start; flex-direction: column; }
+  .host-cta { align-self: start; }
+  .react-filters .tax-toggle { margin-left: .25rem; }
+  .listing-card .card-img-top { height: 13rem; }
+  .detail-heading { align-items: start; flex-direction: column; }
+  .detail-hero { aspect-ratio: 4 / 3; }
+  .detail-columns { grid-template-columns: 1fr; gap: 1.2rem; }
+  .booking-card { grid-row: 1; }
+  .review-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .footer-inner { justify-content: center; flex-wrap: wrap; padding: 1rem 0; text-align: center; }
+}
