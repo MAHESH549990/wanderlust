@@ -1,30 +1,8 @@
 ﻿# Wanderlust
 
-Wanderlust is a travel-stay discovery and listing platform. Guests can search places, filter by category, view locations on a map, and leave reviews. Registered hosts can publish listings with photos and manage their own stays.
+Wanderlust is a travel-stay platform where guests can discover listings, explore locations, and leave reviews, while hosts can publish and manage stays.
 
-**Project:** [github.com/MAHESH549990/wanderlust](https://github.com/MAHESH549990/wanderlust)  
+**GitHub:** [MAHESH549990/wanderlust](https://github.com/MAHESH549990/wanderlust)  
 **Live app:** [wanderlust-llru.onrender.com](https://wanderlust-llru.onrender.com)
 
-## Built with
-
-- React and Vite for the user interface
-- Node.js and Express for the API
-- MongoDB and Mongoose for users, listings, and reviews
-- Passport and server sessions for authentication
-- Cloudinary for listing photos
-- Mapbox for geocoding and maps
-
-## Run locally
-
-Use Node.js 22.12 or newer. Add `MONGODB_URL`, `SESSION_SECRET`, `MAP_TOKEN`, `CLOUD_NAME`, `CLOUD_API_KEY`, and `CLOUD_API_SECRET` to a root `.env` file, then run:
-
-```powershell
-npm install
-npm start
-```
-
-Open `http://localhost:8080`. `npm start` builds the React client and starts the Express server.
-
-For frontend development, run `node app.js` and `npm run dev` in separate terminals, then open `http://localhost:5173`.
-
-To add the sample listings, run `node init/index.js` from the project root. The initializer uses `MONGODB_URL` and `MAP_TOKEN` and keeps existing listings.
+Built with React, Express, MongoDB, Cloudinary, and Mapbox.
