@@ -37,7 +37,8 @@ h1 { font-size: clamp(1.8rem, 4vw, 2.7rem); margin-bottom: 1.25rem; }
 }
 .navbar-shell { gap: 1rem; }
 .navbar-brand { display: inline-flex; flex: 0 0 auto; align-items: center; gap: .65rem; color: var(--ink); font-weight: 800; font-size: 1.25rem; }
-.navbar-brand .fa-compass { display: grid; width: 2.45rem; height: 2.45rem; place-items: center; border-radius: 50%; color: white; background: var(--brand); font-size: 1.1rem; }
+.wanderlust-mark { display: inline-flex; flex: 0 0 auto; width: 2.45rem; height: 2.45rem; color: var(--brand); }
+.wanderlust-mark svg { display: block; width: 100%; height: 100%; }
 .navbar .nav-link { display: inline-flex; align-items: center; gap: .5rem; color: #4d5a54 !important; padding: .65rem .8rem !important; border-radius: .75rem; font-weight: 600; white-space: nowrap; }
 .navbar .nav-link:hover, .navbar .nav-link:focus { color: var(--brand-dark) !important; }
 .navbar .nav-link i { color: #69756e; }
@@ -161,6 +162,8 @@ textarea.form-control { min-height: 8rem; }
 .auth-page, .profile-page { display: grid; min-height: 65vh; place-items: center; padding: 2rem 0; }
 .auth-card, .profile-card { width: min(100%, 31rem); padding: clamp(1.5rem, 5vw, 2.4rem); border: 1px solid var(--line); border-radius: 1.1rem; background: white; box-shadow: 0 10px 32px rgba(23,33,29,.06); }
 .auth-mark, .profile-avatar { display: grid; width: 2.8rem; height: 2.8rem; margin-bottom: 1.2rem; place-items: center; border-radius: .85rem; background: var(--soft); color: var(--brand-dark); font-size: 1.2rem; }
+.auth-mark { width: 3.2rem; height: 3.2rem; background: transparent; }
+.auth-mark .wanderlust-mark { width: 3.2rem; height: 3.2rem; }
 .auth-card h1 { margin: 0; font-size: 1.75rem; }
 .auth-form { margin: 1.5rem 0 .9rem; }
 .auth-submit { min-height: 3rem; border-radius: .7rem; }

@@ -6,6 +6,7 @@ const dns = require("dns");
 dns.setServers((process.env.DNS_SERVERS || "8.8.8.8,8.8.4.4").split(",").map((server) => server.trim()).filter(Boolean));
 
 const path = require("path");
+const { execSync } = require("child_process");
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
@@ -72,6 +73,8 @@ app.use((error, req, res, next) => {
 async function startServer() {
   if (!dbUrl) throw new Error("MONGODB_URL is missing from the project .env file.");
   if (!process.env.SESSION_SECRET) throw new Error("SESSION_SECRET is missing from the project .env file.");
+  console.log("Building React client...");
+  execSync("npm run build", { cwd: __dirname, stdio: "inherit" });
   await mongoose.connect(dbUrl);
   app.listen(port, () => console.log("Wanderlust is ready on port " + port + "."));
 }

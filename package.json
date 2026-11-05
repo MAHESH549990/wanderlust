@@ -12,7 +12,7 @@
     "scripts": {
         "dev": "vite --config client/vite.config.mjs --host 127.0.0.1",
         "build": "vite build --config client/vite.config.mjs",
-        "start": "npm run build && node app.js",
+        "start": "node app.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
@@ -31,9 +31,7 @@
         "passport-local-mongoose": "^9.1.0",
         "react": "^19.3.1",
         "react-dom": "^19.3.1",
-        "react-router-dom": "^7.18.5"
-    },
-    "devDependencies": {
+        "react-router-dom": "^7.18.5",
         "vite": "^8.3.6"
     }
 }

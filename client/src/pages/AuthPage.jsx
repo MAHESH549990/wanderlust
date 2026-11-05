@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { api } from "../api.js";
 import { useApp } from "../context/AppContext.jsx";
+import WanderlustLogo from "../components/WanderlustLogo.jsx";
 
 export default function AuthPage({ signup = false }) {
   const { setUser, notify } = useApp();
@@ -29,7 +30,7 @@ export default function AuthPage({ signup = false }) {
   return (
     <section className="auth-page">
       <div className="auth-card">
-        <div className="auth-mark"><i className="fa-solid fa-compass" /></div>
+        <div className="auth-mark"><WanderlustLogo /></div>
         <p className="eyebrow">{signup ? "START EXPLORING" : "WELCOME BACK"}</p>
         <h1>{signup ? "Create your account" : "Log in to Wanderlust"}</h1>
         <p className="auth-description">{signup ? "Save the places you love and plan your next getaway." : "Your next favorite stay is waiting."}</p>

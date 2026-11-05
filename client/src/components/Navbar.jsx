@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { api } from "../api.js";
 import { useApp } from "../context/AppContext.jsx";
+import WanderlustLogo from "./WanderlustLogo.jsx";
 
 export default function Navbar() {
   const { user, setUser, notify } = useApp();
@@ -34,7 +35,7 @@ export default function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg sticky-top">
       <div className="container-fluid navbar-shell">
-        <Link className="navbar-brand" to="/listings"><i className="fa-solid fa-compass" /><span>Wanderlust</span></Link>
+        <Link className="navbar-brand" to="/listings"><WanderlustLogo /><span>Wanderlust</span></Link>
         <button className="navbar-toggler ms-auto" type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-label="Toggle navigation"><span className="navbar-toggler-icon" /></button>
         <div className={"navbar-collapse " + (open ? "show" : "")}>
           <form className="nav-search" role="search" onSubmit={search}>
@@ -46,7 +47,7 @@ export default function Navbar() {
             <NavLink className="nav-link" to="/listings/new"><i className="fa-solid fa-plus" />Host a stay</NavLink>
             {user ? <>
               <NavLink className="nav-link" to="/profile"><i className="fa-regular fa-user" />Profile</NavLink>
-              <button className="nav-link nav-button" onClick={logout}>Log out</button>
+              <button className="nav-link nav-button" onClick={logout}><i className="fa-solid fa-arrow-right-from-bracket" aria-hidden="true" />Log out</button>
             </> : <>
               <NavLink className="nav-link" to="/login">Log in</NavLink>
               <NavLink className="nav-link nav-signup" to="/signup">Sign up</NavLink>
